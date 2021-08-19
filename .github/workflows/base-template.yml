@@ -8,14 +8,9 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: ['13.10.0']
 
     steps:
-      - name: Clone base template
-        uses: actions/checkout@v2
-        with:
-          repository: imba/imba-base-template
-          path: imba-base-template
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/checkout@v2
@@ -27,5 +22,8 @@ jobs:
           lerna exec npm install
           npm run bootstrap
           npm link imba
+
+          echo "Clone base template"
+          git clone https://github.com/imba/imba-base-template ./imba-base-template
           npm install --prefix ./imba-base-template
           npm run build --prefix ./imba-base-template
